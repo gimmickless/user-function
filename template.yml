@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion : "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: A SAM template for deploying Lambda functions.
+Parameters:
+  FunctionName:
+    Type: String
+  CognitoUserPoolId:
+    Type: String
+  Environment:
+    Type: String
+  Application:
+    Type: String
+Resources:
+  GetCognitoUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Ref FunctionName
+      CodeUri: ./
+      Runtime: python3.8
+      Handler: lambda_function.lambda_handler
+      Environment:
+        Variables:
+          COGNITO_USER_POOL_ID: !Ref CognitoUserPoolId
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - logs:*
+                - cognito-idp:AdminGetUser
+              Resource: "*" 
+      Tags:
+        environment: !Ref Environment
+        application: !Ref Application
+
+  GetCognitoUserFunctionPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt GetCognitoUserFunction.Arn
+      Principal: appsync.amazonaws.com
