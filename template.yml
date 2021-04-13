@@ -11,7 +11,7 @@ Parameters:
   Application:
     Type: String
 Resources:
-  GetCognitoUserFunction:
+  UserFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Ref FunctionName
@@ -33,9 +33,9 @@ Resources:
         environment: !Ref Environment
         application: !Ref Application
 
-  GetCognitoUserFunctionPermissions:
+  UserFunctionPermissions:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
-      FunctionName: !GetAtt GetCognitoUserFunction.Arn
+      FunctionName: !GetAtt UserFunction.Arn
       Principal: appsync.amazonaws.com
