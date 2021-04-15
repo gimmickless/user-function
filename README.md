@@ -6,4 +6,4 @@ Lambda function for user operations
 
 - See [creating a virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment)
 
-- For [sample event input](https://docs.aws.amazon.com/appsync/latest/devguide/resolver-mapping-template-reference-lambda.html#request-mapping-template)
+- For [sample full event input](https://docs.aws.amazon.com/appsync/latest/devguide/resolver-context-reference.html) when using [AppSync direct Lambda resolvers](https://aws.amazon.com/blogs/mobile/appsync-direct-lambda/)

@@ -2,39 +2,31 @@
 import os
 import logging
 import boto3
+from typing import Any, Dict
+from aws_lambda_powertools.utilities.typing import LambdaContext
 
 LOGGER = logging.getLogger()
 COGNITO_USER_POOL_ID = os.getenv('COGNITO_USER_POOL_ID')
 COGNITO_IDP = boto3.client('cognito-idp')
 
-def lambda_handler(event, _context):
+def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, Any]:
     """ Handles function event and context """
-    # Set log level
+
     LOGGER.setLevel(logging.INFO)
+    LOGGER.info('incoming event: %s', event)
 
-    # Expected Event
-    # {
-    #   "field": "getUser",
-    #   "arguments": {
-    #     "username": "postId1"
-    #   }
-    # }
-
-    payload = event['payload']
-    field = payload.get('field')
-    args = payload.get('arguments')
+    field = event.get('info', {}).get('fieldName')
+    args = event.get('arguments', {})
 
     if field == 'getUser':
-
         # resolve backend api key from the secrets manager
         get_user_response = COGNITO_IDP.admin_get_user(
             UserPoolId=COGNITO_USER_POOL_ID,
             Username=args.get('username')
         )
-
         username = get_user_response.get('Username')
         ua_list = get_user_response.get('UserAttributes')
-        LOGGER.debug('result: %s ', ua_list)
+        LOGGER.debug('result: %s', ua_list)
 
         return {
             'username': username,
