@@ -30,8 +30,8 @@ def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, 
 
         return {
             'username': username,
-            'picture': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'picture'), ''),
-            'bio': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'bio'), ''),
+            'picture': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'picture'), None),
+            'bio': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'bio'), None),
             'contactable': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'contactable'), False)
         }
 
