@@ -13,7 +13,6 @@ def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, 
     """ Handles function event and context """
 
     LOGGER.setLevel(logging.INFO)
-    LOGGER.info('incoming event: %s', event)
 
     field = event.get('info', {}).get('fieldName')
     args = event.get('arguments', {})
@@ -26,7 +25,7 @@ def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, 
         )
         username = get_user_response.get('Username')
         ua_list = get_user_response.get('UserAttributes')
-        LOGGER.debug('result: %s', ua_list)
+        LOGGER.info('result: %s', ua_list)
 
         return {
             'username': username,
