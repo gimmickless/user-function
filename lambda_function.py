@@ -26,19 +26,13 @@ def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, 
         username = get_user_response.get('Username')
         ua_list = get_user_response.get('UserAttributes')
         ua_obj = {x['Name']:x['Value'] for x in ua_list}
-        LOGGER.info('result: %s', ua_obj)
+        # LOGGER.info('result: %s', ua_obj)
 
-        # return {
-        #     'username': username,
-        #     'picture': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'picture'), None),
-        #     'bio': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'bio'), None),
-        #     'contactable': next((ua.get('Value') for ua in ua_list if ua.get('Name') == 'contactable'), False)
-        # }
         return {
             'username': username,
             'picture': ua_obj.get('picture', None),
             'bio': ua_obj.get('bio', None),
-            'contactable': ua_obj.get('contactable', False)
+            'contactable': ua_obj.get('custom:contactable', '').lower() == 'true'
         }
 
     raise ValueError('Unrecognized operation "{}"'.format(field))
