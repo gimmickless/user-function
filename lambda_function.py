@@ -18,7 +18,7 @@ def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, 
     field = event.get('info', {}).get('fieldName')
     args = event.get('arguments', {})
 
-    if field == 'getUser':
+    if field == 'getUserBasicInfo':
         # resolve backend api key from the secrets manager
         get_user_response = COGNITO_IDP.admin_get_user(
             UserPoolId=COGNITO_USER_POOL_ID,
