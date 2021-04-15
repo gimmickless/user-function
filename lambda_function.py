@@ -25,7 +25,8 @@ def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, 
         )
         username = get_user_response.get('Username')
         ua_list = get_user_response.get('UserAttributes')
-        LOGGER.info('result: %s', ua_list)
+        ua_obj = {x['Name']:x['Value'] for x in ua_list}
+        LOGGER.info('result: %s', ua_obj)
 
         return {
             'username': username,
