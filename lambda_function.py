@@ -32,7 +32,8 @@ def lambda_handler(event: Dict[str, Any], _context: LambdaContext) -> Dict[str, 
             'username': username,
             'picture': ua_obj.get('picture', None),
             'bio': ua_obj.get('bio', None),
-            'contactable': ua_obj.get('custom:contactable', '').lower() == 'true'
+            'contactable': ua_obj.get('custom:contactable', '').lower() == 'true',
+            'identityId': ua_obj.get('custom:identityId', None)
         }
 
     raise ValueError('Unrecognized operation "{}"'.format(field))
